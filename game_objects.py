@@ -1,5 +1,5 @@
 """
-author: edacjos
+author: JDachuk
 created: 7/19/19
 """
 
@@ -48,6 +48,7 @@ class Tube:
         self.top_body.scale_y = (Const.HEIGHT - self.top_head.height) / self.top_body.height
         self.center = (self.top_head.x + self.top_head.width) / 2
         self.crossed = False
+        self.half_crossed = False
 
     def draw(self):
         self.bottom_body.draw()

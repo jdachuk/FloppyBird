@@ -1,9 +1,9 @@
 """
-author: edacjos
+author: JDachuk
 created: 7/15/19
 """
 
-from pyglet.window import Window
+from pyglet.window import Window, FPSDisplay
 from pyglet.text import Label
 from game_objects import *
 from population import Population
@@ -16,7 +16,6 @@ class GameWindowAI(Window):
         self.set_size(Const.WIDTH, Const.HEIGHT)
         self.set_caption('Floppy Bird')
 
-        self.frame_counter = 0
         self.score = 0
 
         self.population = Population(self)
@@ -26,6 +25,10 @@ class GameWindowAI(Window):
 
         self.score_label = Label(text=f'Score: {self.score}', x=Const.WIDTH - 10, y=Const.HEIGHT - 20,
                                  anchor_x='right', bold=True)
+        self.fps_display = FPSDisplay(self)
+        self.fps_display.label.font_size = 12
+        self.fps_display.label.color = (0, 255, 0, 255)
+        self.fps_display.label.bold = False
 
         pyglet.clock.schedule_interval(self.on_timer, Const.FRAME_RATE)
 
@@ -37,6 +40,7 @@ class GameWindowAI(Window):
         self.land.draw()
         self.population.draw()
         self.score_label.draw()
+        self.fps_display.draw()
 
     def on_timer(self, dt):
         self.produce_remove_tubes()
@@ -56,10 +60,11 @@ class GameWindowAI(Window):
             tube.crossed = True
 
     def produce_remove_tubes(self):
-        self.frame_counter += 1
-
-        if self.frame_counter == Const.TUBE_PERIOD * Const.FRAMES_PER_SECOND:
-            self.frame_counter = 0
+        tube = self.tubes[0]
+        if tube.half_crossed:
+            tube = self.tubes[1]
+        if tube.bbox[0][0] < Const.WIDTH / 2 and not tube.half_crossed:
+            tube.half_crossed = True
             tube = Tube()
             tube.draw()
             self.tubes.append(tube)
@@ -75,7 +80,6 @@ class GameWindowAI(Window):
 
     def replay(self):
         self.tubes = [Tube()]
-        self.frame_counter = 0
         self.score = 0
         self.score_label.text = f'Score: {self.score}'
 

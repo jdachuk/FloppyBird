@@ -1,5 +1,5 @@
 """
-author: edacjos
+author: JDachuk
 created: 7/19/19
 """
 
@@ -28,7 +28,8 @@ class Population:
 
     def draw(self):
         for bird in self.individuals:
-            bird.draw()
+            if bird.on_screen:
+                bird.draw()
 
     def animate(self, dt):
         for bird in self.individuals:

@@ -1,5 +1,5 @@
 """
-author: edacjos
+author: JDachuk
 created: 7/19/19
 """
 
@@ -17,7 +17,7 @@ class Const:
     BIRD_X = 100
     BIRD_Y = 200
     G_A = 9.80954
-    FRAMES_PER_SECOND = 60
+    FRAMES_PER_SECOND = 120
     FRAME_RATE = 1 / FRAMES_PER_SECOND
 
     TUBE_PERIOD = 4.3

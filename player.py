@@ -1,5 +1,5 @@
 """
-author: edacjos
+author: JDachuk
 created: 7/19/19
 """
 
@@ -126,6 +126,7 @@ class Bird(PhysicObject):
         self.x, self.y = 100, 400
         self.fly_acceleration = 4
         self.alive = True
+        self.on_screen = True
         self.brain = BirdBrain()
         self.birth_time = 0
         self.fitness = 0
@@ -134,6 +135,10 @@ class Bird(PhysicObject):
     def _animate(self, dt):
         self.velocity_y -= Const.G_A * dt
         self.y += self.velocity_y
+        if self.y > Const.HEIGHT or self.y + self.height < 0:
+            self.on_screen = False
+        else:
+            self.on_screen = True
 
     def animate(self, dt):
         if self.alive:
