@@ -146,7 +146,7 @@ class Bird(PhysicObject):
             self.make_decision(data)
         self._animate(dt)
 
-    def accelerate(self):
+    def flip(self):
         if not self.alive:
             return
         self.velocity_y = self.fly_acceleration
@@ -155,7 +155,7 @@ class Bird(PhysicObject):
         brain_output = self.brain.analyze(input_data)
 
         if brain_output[0] > brain_output[1]:
-            self.accelerate()
+            self.flip()
         else:
             pass
 
